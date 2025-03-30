@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" type="image/png" href="/images/recycle-symbol (1).png">
+</head>
+<body>
+    <div class="container">
+        <h2>Upload an Image</h2>
+        <input type="file" id="fileInput">
+        <button onclick="uploadImage()">Predict</button>
+        <div id="result"></div>
+        <img id="uploadedImage" class='image' src="" style="display:none;" width="300px">
+        <div class="containe2" id="message_container">
+           
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
