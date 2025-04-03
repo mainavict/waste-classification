@@ -1,3 +1,5 @@
+#importing all  needed libs  fro the project
+
 from flask import Flask, request, jsonify, render_template
 import os
 import numpy as np
@@ -10,7 +12,7 @@ import joblib
 app = Flask(__name__)
 
 # Load the trained model
-model = joblib.load("svm_model.pkl")  # Save your trained model as svm_model.pkl
+model = joblib.load("svm_model.pkl")#saved trained batch model model
 
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -18,6 +20,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 categories = ['organic', 'recyclable']  # Define categories
 
+# this id processing the incomming images 
 def preprocess_image(image_path):
     image = imread(image_path).astype(np.float32)
     if len(image.shape) == 3:  # Convert to grayscale if RGB
@@ -27,18 +30,18 @@ def preprocess_image(image_path):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html') #insert the html  fortpage
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if 'file' not in request.files:
+    if 'file' not in request.files: #this is a function to predict  the inserted photo
         return jsonify({'error': 'No file uploaded'})
     
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No file selected'})
     
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename) #the  uploaded photo is save into the  file  for futer reference
     file.save(filepath)
     
     image_data = preprocess_image(filepath)
